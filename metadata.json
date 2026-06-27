@@ -1,0 +1,6 @@
+{
+  "name": "Skill Jobs Islamic Learning Academy",
+  "description": "An elegant educational platform offering professional diploma courses in Islamic Parenting, Economics, Fiqh, and Business & Entrepreneurship.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
