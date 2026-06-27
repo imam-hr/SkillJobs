@@ -113,32 +113,38 @@ export default function EnrollmentPortal({ onClose, selectedCourseId, onSuccess 
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/40 backdrop-blur-md overflow-y-auto">
+    <div 
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-950/40 backdrop-blur-md overflow-y-auto cursor-pointer"
+    >
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-        className="relative glass-panel rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl my-8"
+        onClick={(e) => e.stopPropagation()}
+        className="relative glass-panel rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl my-8 cursor-default"
       >
         {/* Decorative Top header gradient bar */}
         <div className="h-2 bg-gradient-to-r from-emerald-500 via-emerald-400 to-[#34d399]"></div>
 
         {/* Modal Header */}
-        <div className="flex items-center justify-between p-6 border-b border-white/10">
-          <div>
+        <div className="relative p-5 sm:p-6 border-b border-white/10 pr-14 sm:pr-16">
+          <div className="space-y-1">
             <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
               <Sparkles className="w-3.5 h-3.5" />
               {t("enrollmentHeader")}
             </span>
-            <h3 className="text-xl font-bold text-white mt-1">
+            <h3 className="text-lg sm:text-xl font-bold text-white leading-tight">
               {step === 1 ? t("step1Header") : t("step2Header")}
             </h3>
           </div>
           <button
+            type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg bg-white/5 text-white/60 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+            className="absolute top-5 right-5 sm:top-6 sm:right-6 p-2 rounded-full bg-white/5 text-white/60 hover:text-white hover:bg-white/10 hover:scale-105 active:scale-95 transition-all border border-white/10 shadow-sm flex items-center justify-center cursor-pointer z-10"
+            aria-label="Close"
           >
-            <X className="w-5 h-5" />
+            <X className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </div>
 
@@ -282,14 +288,24 @@ export default function EnrollmentPortal({ onClose, selectedCourseId, onSuccess 
               * {translate(PAYMENT_INFO.oneTimeTitle.bn, PAYMENT_INFO.oneTimeTitle.en)} {translate(PAYMENT_INFO.paymentMethod.bn, PAYMENT_INFO.paymentMethod.en)}
             </p>
 
-            {/* Submit button */}
-            <button
-              type="submit"
-              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-extrabold text-white bg-gradient-to-r from-emerald-500 via-[#34d399] to-emerald-600 hover:brightness-110 transition-all cursor-pointer shadow-lg shadow-emerald-500/20"
-            >
-              {t("nextPaymentStep")}
-              <ArrowRight className="w-4 h-4 text-white" />
-            </button>
+            {/* Action buttons (Cancel / Next) */}
+            <div className="flex gap-3 pt-2">
+              <button
+                type="button"
+                onClick={onClose}
+                className="flex-1 py-3.5 rounded-xl text-xs font-bold text-white/80 bg-white/5 border border-white/10 hover:bg-white/10 hover:text-rose-400 hover:border-rose-500/30 transition-all cursor-pointer text-center"
+              >
+                {translate("বাতিল করুন", "Cancel")}
+              </button>
+              
+              <button
+                type="submit"
+                className="flex-2 flex items-center justify-center gap-2 py-3.5 rounded-xl font-extrabold text-xs sm:text-sm text-white bg-gradient-to-r from-emerald-500 via-[#34d399] to-emerald-600 hover:brightness-110 transition-all cursor-pointer shadow-lg shadow-emerald-500/20"
+              >
+                {t("nextPaymentStep")}
+                <ArrowRight className="w-4 h-4 text-white" />
+              </button>
+            </div>
 
           </form>
         ) : (
@@ -445,11 +461,19 @@ export default function EnrollmentPortal({ onClose, selectedCourseId, onSuccess 
               </p>
             </div>
 
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
+              <button
+                type="button"
+                onClick={onClose}
+                className="flex-1 py-3.5 rounded-xl text-xs font-bold text-white/60 bg-white/5 border border-white/10 hover:bg-white/10 hover:text-rose-400 hover:border-rose-500/30 transition-all cursor-pointer text-center"
+              >
+                {translate("বাতিল করুন", "Cancel")}
+              </button>
+              
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="flex-1 py-3.5 rounded-xl text-xs font-bold text-white/80 bg-white/5 border border-white/10 hover:bg-white/10 transition-all cursor-pointer"
+                className="flex-1 py-3.5 rounded-xl text-xs font-bold text-white/80 bg-white/5 border border-white/10 hover:bg-white/10 transition-all cursor-pointer text-center"
               >
                 {t("goBackBtn")}
               </button>
@@ -457,7 +481,7 @@ export default function EnrollmentPortal({ onClose, selectedCourseId, onSuccess 
               <button
                 type="button"
                 onClick={handleCompletePaymentSimulation}
-                className="flex-2 py-3.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-emerald-400 to-emerald-500 hover:brightness-110 transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-500/10"
+                className="flex-2 py-3.5 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-emerald-400 to-emerald-500 hover:brightness-110 active:scale-98 transition-all cursor-pointer flex items-center justify-center gap-1.5 shadow-lg shadow-emerald-500/10 text-center"
               >
                 <CheckCircle className="w-4 h-4 text-white" />
                 {t("completeEnrollmentBtn")}

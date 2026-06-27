@@ -117,26 +117,18 @@ export default function Header({ onNavigate, onOpenEnroll }: HeaderProps) {
           </div>
 
           {/* Mobile Menu Trigger */}
-          <div className="flex sm:hidden items-center gap-2">
-            {/* Mini Language Switcher for smaller devices */}
+          <div className="flex lg:hidden items-center gap-2">
+            {/* Mini Language Switcher for mobile-only */}
             <button
               onClick={() => setLanguage(language === "bn" ? "en" : "bn")}
-              className="px-2.5 py-1 rounded-lg border border-white/10 bg-white/5 text-xs font-bold text-emerald-400"
+              className="sm:hidden px-2.5 py-1 rounded-lg border border-white/10 bg-white/5 text-xs font-bold text-emerald-400 cursor-pointer"
             >
               {language === "bn" ? "EN" : "বাংলা"}
             </button>
 
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-lg text-white/80 hover:bg-white/5 hover:text-emerald-400 transition-all focus:outline-none"
-            >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-          <div className="hidden sm:flex lg:hidden items-center gap-2">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-lg text-white/80 hover:bg-white/5 hover:text-emerald-400 transition-all focus:outline-none"
+              className="p-2 rounded-lg text-white/80 hover:bg-white/5 hover:text-emerald-400 transition-all focus:outline-none cursor-pointer"
             >
               {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
